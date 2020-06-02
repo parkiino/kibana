@@ -18,7 +18,10 @@ export const ConfigureEndpointDatasource = memo<CustomConfigureDatasourceContent
     const { services } = useKibana();
     const pathname = useLocation().pathname.split('/');
     const policyId = pathname[pathname.length - 1];
-    const policyUrl = getManagementUrl({ name: 'policyDetails', policyId });
+    const policyUrl = `${getManagementUrl({
+      name: 'policyDetails',
+      policyId,
+    })}?appReturn=ingestManager`;
 
     return (
       <EuiEmptyPrompt

@@ -23,6 +23,7 @@ import { useDispatch } from 'react-redux';
 import { usePolicyDetailsSelector } from './policy_hooks';
 import {
   policyDetails,
+  returnToApp,
   agentStatusSummary,
   updateStatus,
   isLoading,
@@ -42,7 +43,7 @@ import { getManagementUrl } from '../../../common/routing';
 
 export const PolicyDetails = React.memo(() => {
   const dispatch = useDispatch<(action: AppAction) => void>();
-  const { notifications } = useKibana();
+  const { notifications, services } = useKibana();
 
   // Store values
   const policyItem = usePolicyDetailsSelector(policyDetails);
@@ -50,10 +51,12 @@ export const PolicyDetails = React.memo(() => {
   const policyUpdateStatus = usePolicyDetailsSelector(updateStatus);
   const isPolicyLoading = usePolicyDetailsSelector(isLoading);
   const policyApiError = usePolicyDetailsSelector(apiError);
+  const shouldReturnToIngest = usePolicyDetailsSelector(returnToApp) === 'ingestManager';
 
   // Local state
   const [showConfirm, setShowConfirm] = useState<boolean>(false);
   const policyName = policyItem?.name ?? '';
+  const agentConfigId = policyItem?.config_id ?? '';
 
   // Handle showing update statuses
   useEffect(() => {
@@ -72,6 +75,10 @@ export const PolicyDetails = React.memo(() => {
             />
           ),
         });
+        if (shouldReturnToIngest)
+          services.application.navigateToApp('ingestManager', {
+            path: `#/configs/${agentConfigId}`,
+          });
       } else {
         notifications.toasts.danger({
           toastLifeTimeMs: 10000,

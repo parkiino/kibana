@@ -6,6 +6,7 @@
 
 import { createSelector } from 'reselect';
 import { matchPath } from 'react-router-dom';
+import queryString from 'query-string';
 import { PolicyDetailsState } from '../../types';
 import {
   Immutable,
@@ -40,6 +41,10 @@ export const isOnPolicyDetailsPage = (state: Immutable<PolicyDetailsState>) => {
       exact: true,
     }) !== null
   );
+};
+
+export const returnToApp = (state: Immutable<PolicyDetailsState>) => {
+  return queryString.parse(state.location?.search ?? '')?.appReturn ?? '';
 };
 
 /** Returns the policyId from the url */
