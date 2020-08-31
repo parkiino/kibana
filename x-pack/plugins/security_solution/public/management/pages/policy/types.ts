@@ -8,6 +8,7 @@ import {
   AppLocation,
   Immutable,
   MalwareFields,
+  AdvancedFields,
   PolicyData,
   UIPolicyConfig,
 } from '../../../../common/endpoint/types';
@@ -168,6 +169,8 @@ export type KeysByValueCriteria<O, Criteria> = {
 
 /** Returns an array of the policy OSes that have a malware protection field */
 export type MalwareProtectionOSes = KeysByValueCriteria<UIPolicyConfig, { malware: MalwareFields }>;
+
+export type AdvancedOSes = KeysByValueCriteria<UIPolicyConfig, { advanced: AdvancedFields }>;
 
 export interface GetPolicyListResponse extends GetPackagePoliciesResponse {
   items: PolicyData[];

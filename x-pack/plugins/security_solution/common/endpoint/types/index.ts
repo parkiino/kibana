@@ -765,6 +765,7 @@ type KbnConfigSchemaNonOptionalProps<Props extends Record<string, unknown>> = Pi
  */
 export interface PolicyConfig {
   windows: {
+    advanced: AdvancedFields;
     events: {
       dll_and_driver_load: boolean;
       dns: boolean;
@@ -780,6 +781,7 @@ export interface PolicyConfig {
     };
   };
   mac: {
+    advanced: AdvancedFields;
     events: {
       file: boolean;
       process: boolean;
@@ -791,6 +793,7 @@ export interface PolicyConfig {
     };
   };
   linux: {
+    advanced: AdvancedFields;
     events: {
       file: boolean;
       process: boolean;
@@ -809,15 +812,15 @@ export interface UIPolicyConfig {
   /**
    * Windows-specific policy configuration that is supported via the UI
    */
-  windows: Pick<PolicyConfig['windows'], 'events' | 'malware'>;
+  windows: Pick<PolicyConfig['windows'], 'events' | 'malware' | 'advanced'>;
   /**
    * Mac-specific policy configuration that is supported via the UI
    */
-  mac: Pick<PolicyConfig['mac'], 'malware' | 'events'>;
+  mac: Pick<PolicyConfig['mac'], 'malware' | 'events' | 'advanced'>;
   /**
    * Linux-specific policy configuration that is supported via the UI
    */
-  linux: Pick<PolicyConfig['linux'], 'events'>;
+  linux: Pick<PolicyConfig['linux'], 'events' | 'advanced'>;
 }
 
 /** Policy: Malware protection fields */
@@ -830,6 +833,15 @@ export enum ProtectionModes {
   detect = 'detect',
   prevent = 'prevent',
   off = 'off',
+}
+
+export interface AdvancedFields {
+  elasticsearch: {
+    tls: {
+      verify_hostname: string;
+      verify_peer: string;
+    };
+  };
 }
 
 /**

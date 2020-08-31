@@ -92,7 +92,6 @@ export const policyDetailsReducer: ImmutableReducer<PolicyDetailsState, AppActio
       // just return the updated state with new location data
       return newState;
     }
-
     return {
       ...initialPolicyDetailsState(),
       location: action.payload,
