@@ -765,7 +765,14 @@ type KbnConfigSchemaNonOptionalProps<Props extends Record<string, unknown>> = Pi
  */
 export interface PolicyConfig {
   windows: {
-    advanced: AdvancedFields;
+    advanced: {
+      elasticsearch: {
+        tls: {
+          verify_hostname: string;
+          verify_peer: string;
+        };
+      };
+    };
     events: {
       dll_and_driver_load: boolean;
       dns: boolean;
@@ -781,7 +788,14 @@ export interface PolicyConfig {
     };
   };
   mac: {
-    advanced: AdvancedFields;
+    advanced: {
+      elasticsearch: {
+        tls: {
+          verify_hostname: string;
+          verify_peer: string;
+        };
+      };
+    };
     events: {
       file: boolean;
       process: boolean;
@@ -793,7 +807,14 @@ export interface PolicyConfig {
     };
   };
   linux: {
-    advanced: AdvancedFields;
+    advanced: {
+      elasticsearch: {
+        tls: {
+          verify_hostname: string;
+          verify_peer: string;
+        };
+      };
+    };
     events: {
       file: boolean;
       process: boolean;
