@@ -261,6 +261,7 @@ export const PrivilegesRolesForm: FC<PrivilegesRolesFormProps> = (props) => {
 
   const onRoleSpacePrivilegeChange = useCallback(
     (spacePrivilege: KibanaRolePrivilege) => {
+      console.log('on role space privilege', computeRoleCustomizationAnchor(space.id, selectedRoles))
       if (spacePrivilege === FEATURE_PRIVILEGES_CUSTOM) {
         const _roleCustomizationAnchor = computeRoleCustomizationAnchor(space.id, selectedRoles);
         if (_roleCustomizationAnchor) setRoleCustomizationAnchor(_roleCustomizationAnchor);

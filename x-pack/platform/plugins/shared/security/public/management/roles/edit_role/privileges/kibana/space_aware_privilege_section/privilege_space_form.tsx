@@ -353,6 +353,7 @@ export class PrivilegeSpaceForm extends Component<Props, State> {
   private onSpaceBasePrivilegeChange = (basePrivilege: string) => {
     const role = copyRole(this.state.role);
     const form = role.kibana[this.state.privilegeIndex];
+    console.log('role', role)
 
     const privilegeName = basePrivilege.split('basePrivilege_')[1];
 
@@ -363,8 +364,10 @@ export class PrivilegeSpaceForm extends Component<Props, State> {
       isCustomizingFeaturePrivileges = true;
     } else {
       form.base = [privilegeName];
-      form.feature = {};
+      form.feature = {'siemV5': ['minimal_all']};
     }
+    
+    console.log('on space base privilege change', role.kibana[this.state.privilegeIndex])
 
     this.setState({
       selectedBasePrivilege:
@@ -433,6 +436,7 @@ export class PrivilegeSpaceForm extends Component<Props, State> {
   private setRole(privileges: string[], featureId?: string) {
     const role = copyRole(this.state.role);
     const entry = role.kibana[this.state.privilegeIndex];
+    console.log({entry, privileges, featureId} )
 
     if (privileges.length === 0) {
       if (featureId) {
@@ -443,9 +447,11 @@ export class PrivilegeSpaceForm extends Component<Props, State> {
     } else {
       let securedFeaturesToSet = this.props.kibanaPrivileges.getSecuredFeatures();
       if (featureId) {
+        console.log('feature id', featureId)
         securedFeaturesToSet = [securedFeaturesToSet.find((sf) => sf.id === featureId)!];
       }
       securedFeaturesToSet.forEach((feature) => {
+        console.log('securedFeaturesToSet', feature.getPrimaryFeaturePrivileges({includeMinimalFeaturePrivileges: true}))
         const nextFeaturePrivilege = feature
           .getPrimaryFeaturePrivileges({ includeMinimalFeaturePrivileges: true })
           .find((pfp) => {

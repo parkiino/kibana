@@ -126,7 +126,18 @@ export class PrivilegeFormCalculator {
     const effectivePrivilege = feature
       .getPrimaryFeaturePrivileges({ includeMinimalFeaturePrivileges: true })
       .find((fp) => {
-        return selectedFeaturePrivileges.includes(fp.id) || basePrivilege?.grantsPrivilege(fp);
+        const included = selectedFeaturePrivileges.includes(fp.id);
+        if (featureId === 'siemV5') {
+          // eslint-disable-next-line no-console
+          console.log('[getEffectivePrimaryFeaturePrivilege] siemV5', {
+            fpId: fp.id,
+            selectedFeaturePrivilegesIncludesFpId: included,
+            basePrivilegeGrantsPrivilege: basePrivilege?.grantsPrivilege(fp),
+          });
+          return included;
+        } else {
+          return included || basePrivilege?.grantsPrivilege(fp);
+        }
       });
     const correctSpacesSelected = effectivePrivilege?.requireAllSpaces ? allSpacesSelected : true;
     const availablePrivileges = correctSpacesSelected && !effectivePrivilege?.disabled;
